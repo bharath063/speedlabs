@@ -15,8 +15,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Alpine.js for interactivity (e.g., mobile menu) -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Rellax.js for Parallax Effect -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"></script>
     <!-- Custom Styles -->
     <style>
         body {
@@ -31,7 +32,13 @@
             background-image: url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* This creates a simple but effective parallax-like effect */
+        }
+        
+        /* Use fixed attachment only on larger screens to avoid mobile iOS issues */
+        @media (min-width: 768px) {
+            .hero-bg {
+                background-attachment: fixed;
+            }
         }
         .text-shadow {
             text-shadow: 0 2px 4px rgba(0,0,0,0.6);
@@ -42,17 +49,37 @@
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        
+        /* Improve text readability on mobile */
+        @media (max-width: 768px) {
+            .card-bg {
+                background-color: rgba(17, 17, 17, 0.95);
+            }
+            
+            /* Ensure better touch targets on mobile */
+            a, button {
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        
+        /* Optimize scrolling on iOS */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header -->
     <header x-data="{ mobileMenuOpen: false }" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" :class="{ 'bg-black/80 backdrop-blur-sm shadow-lg': !mobileMenuOpen, 'bg-black': mobileMenuOpen }">
-        <div class="container mx-auto px-6 py-4">
+        <div class="container mx-auto px-4 sm:px-6 py-4">
             <div class="flex items-center justify-between">
                 <!-- Logo -->
                 <div class="flex flex-col">
-                    <a href="#" class="text-2xl font-orbitron font-bold tracking-wider uppercase">
+                    <a href="#" class="text-xl sm:text-2xl font-orbitron font-bold tracking-wider uppercase">
                         Speed<span class="text-red-600">Labs</span>
                     </a>
                     <span class="text-xs text-gray-400 font-light tracking-wide uppercase">Engineered for dominance</span>
@@ -89,112 +116,112 @@
     <main>
 
         <!-- Hero Section -->
-        <section class="rellax hero-bg h-screen flex items-center justify-center text-center text-white p-6" data-rellax-speed="-7">
-            <div class="bg-black/50 p-8 rounded-lg">
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-orbitron font-black uppercase tracking-widest text-shadow">
+        <section class="rellax hero-bg min-h-screen flex items-center justify-center text-center text-white p-4 sm:p-6" data-rellax-speed="-7">
+            <div class="bg-black/50 p-6 sm:p-8 rounded-lg max-w-4xl w-full mx-auto">
+                <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-orbitron font-black uppercase tracking-wide sm:tracking-widest text-shadow leading-tight">
                     Unleash Your <span class="text-red-600">Potential</span>
                 </h1>
-                <p class="mt-4 text-lg md:text-2xl max-w-3xl mx-auto font-light text-shadow">
+                <p class="mt-4 text-base sm:text-lg md:text-2xl max-w-3xl mx-auto font-light text-shadow leading-relaxed">
                     Expert ECU Remapping and Bespoke Performance Parts. Engineered for Dominance.
                 </p>
-                <a href="#services" class="mt-8 inline-block bg-red-600 text-white font-bold text-lg uppercase py-3 px-8 rounded-lg hover:bg-red-700 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/50 hover:-translate-y-1 transition-all duration-300">
+                <a href="#services" class="mt-6 sm:mt-8 inline-block bg-red-600 text-white font-bold text-base sm:text-lg uppercase py-3 px-6 sm:px-8 rounded-lg hover:bg-red-700 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/50 hover:-translate-y-1 transition-all duration-300">
                     Discover More
                 </a>
             </div>
         </section>
 
         <!-- Services Section -->
-        <section id="services" class="py-20 bg-black">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-orbitron font-bold uppercase">Our <span class="text-red-600">Specialties</span></h2>
-                    <p class="text-gray-400 mt-2 max-w-2xl mx-auto">We offer precision tuning and custom parts to elevate your riding experience.</p>
+        <section id="services" class="py-16 sm:py-20 bg-black">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-orbitron font-bold uppercase">Our <span class="text-red-600">Specialties</span></h2>
+                    <p class="text-gray-400 mt-2 max-w-2xl mx-auto text-sm sm:text-base">We offer precision tuning and custom parts to elevate your riding experience.</p>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="grid md:grid-cols-2 gap-6 sm:gap-8">
                     <!-- Service 1: ECU Remapping -->
-                    <div class="card-bg p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="inline-block bg-red-600 p-4 rounded-full mb-4">
+                    <div class="card-bg p-6 sm:p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="inline-block bg-red-600 p-3 sm:p-4 rounded-full mb-4">
                             <!-- SVG Icon for CPU -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
                         </div>
-                        <h3 class="text-2xl font-orbitron font-bold mb-2">Precision ECU Remapping</h3>
-                        <p class="text-gray-400">Unlock hidden horsepower and torque, improve throttle response, and optimize fuel efficiency with our custom-tailored ECU tunes. We analyze and remap your bike's brain for peak performance.</p>
+                        <h3 class="text-xl sm:text-2xl font-orbitron font-bold mb-2">Precision ECU Remapping</h3>
+                        <p class="text-gray-400 text-sm sm:text-base">Unlock hidden horsepower and torque, improve throttle response, and optimize fuel efficiency with our custom-tailored ECU tunes. We analyze and remap your bike's brain for peak performance.</p>
                     </div>
 
                     <!-- Service 2: Bespoke Parts -->
-                    <div class="card-bg p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="inline-block bg-red-600 p-4 rounded-full mb-4">
+                    <div class="card-bg p-6 sm:p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="inline-block bg-red-600 p-3 sm:p-4 rounded-full mb-4">
                             <!-- SVG Icon for Wrench/Gears -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
                         </div>
-                        <h3 class="text-2xl font-orbitron font-bold mb-2">Bespoke Performance Parts</h3>
-                        <p class="text-gray-400">From high-flow velocity stacks to custom-machined components, we design and fabricate parts that are not only beautiful but are built to perform under the most demanding conditions.</p>
+                        <h3 class="text-xl sm:text-2xl font-orbitron font-bold mb-2">Bespoke Performance Parts</h3>
+                        <p class="text-gray-400 text-sm sm:text-base">From high-flow velocity stacks to custom-machined components, we design and fabricate parts that are not only beautiful but are built to perform under the most demanding conditions.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- About Us Section -->
-        <section id="about" class="py-20 bg-gray-900/50">
-            <div class="container mx-auto px-6">
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <img src="https://images.unsplash.com/photo-1617097431915-73e347989345?q=80&w=1932&auto=format&fit=crop" alt="Motorcycle engine close-up" class="rounded-lg shadow-2xl">
+        <section id="about" class="py-16 sm:py-20 bg-gray-900/50">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="grid md:grid-cols-2 gap-8 sm:gap-12 items-center">
+                    <div class="order-2 md:order-1">
+                        <img src="img1.jpg" alt="Motorcycle engine close-up" class="rounded-lg shadow-2xl w-full">
                     </div>
-                    <div>
-                        <h2 class="text-3xl md:text-4xl font-orbitron font-bold uppercase">Driven by <span class="text-red-600">Passion</span></h2>
-                        <p class="text-gray-400 mt-4 text-lg">SpeedLabs was born from a lifetime of passion for two wheels and a relentless pursuit of performance. We're not just technicians; we're riders, racers, and engineers dedicated to pushing the limits of what's possible.</p>
-                        <p class="text-gray-400 mt-4">Our philosophy is simple: precision engineering, transparent communication, and results you can feel every time you twist the throttle. We treat every bike as if it were our own.</p>
+                    <div class="order-1 md:order-2">
+                        <h2 class="text-2xl sm:text-3xl md:text-4xl font-orbitron font-bold uppercase">Driven by <span class="text-red-600">Passion</span></h2>
+                        <p class="text-gray-400 mt-4 text-base sm:text-lg">SpeedLabs was born from a lifetime of passion for two wheels and a relentless pursuit of performance. We're not just technicians; we're riders, racers, and engineers dedicated to pushing the limits of what's possible.</p>
+                        <p class="text-gray-400 mt-4 text-sm sm:text-base">Our philosophy is simple: precision engineering, transparent communication, and results you can feel every time you twist the throttle. We treat every bike as if it were our own.</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Racing Experience Section -->
-        <section class="py-20 bg-black">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-orbitron font-bold uppercase">Track <span class="text-red-600">Proven</span></h2>
-                    <p class="text-gray-400 mt-2 max-w-3xl mx-auto">Over 6 years of circuit racing experience with multiple podiums. We don't just tune for dyno numbers - we tune for how a bike should behave on the track.</p>
+        <section class="py-16 sm:py-20 bg-black">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-orbitron font-bold uppercase">Track <span class="text-red-600">Proven</span></h2>
+                    <p class="text-gray-400 mt-2 max-w-3xl mx-auto text-sm sm:text-base">Over 6 years of circuit racing experience with multiple podiums. We don't just tune for dyno numbers - we tune for how a bike should behave on the track.</p>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8">
+                <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
                     <!-- Racing Experience -->
-                    <div class="card-bg p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="inline-block bg-red-600 p-4 rounded-full mb-4">
+                    <div class="card-bg p-6 sm:p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="inline-block bg-red-600 p-3 sm:p-4 rounded-full mb-4">
                             <!-- Trophy Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
                         </div>
-                        <h3 class="text-2xl font-orbitron font-bold mb-2">6+ Years Racing</h3>
-                        <p class="text-gray-400">Multiple podium finishes in circuit racing. We know what it takes to win because we've been there, done that.</p>
+                        <h3 class="text-xl sm:text-2xl font-orbitron font-bold mb-2">6+ Years Racing</h3>
+                        <p class="text-gray-400 text-sm sm:text-base">Multiple podium finishes in circuit racing. We know what it takes to win because we've been there, done that.</p>
                     </div>
 
                     <!-- Race Development -->
-                    <div class="card-bg p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="inline-block bg-red-600 p-4 rounded-full mb-4">
+                    <div class="card-bg p-6 sm:p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="inline-block bg-red-600 p-3 sm:p-4 rounded-full mb-4">
                             <!-- Racing Flag Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
                         </div>
-                        <h3 class="text-2xl font-orbitron font-bold mb-2">Race Bike Development</h3>
-                        <p class="text-gray-400">Hands-on experience developing and tuning race bikes for competitive motorsport. We understand the demands of track performance.</p>
+                        <h3 class="text-xl sm:text-2xl font-orbitron font-bold mb-2">Race Bike Development</h3>
+                        <p class="text-gray-400 text-sm sm:text-base">Hands-on experience developing and tuning race bikes for competitive motorsport. We understand the demands of track performance.</p>
                     </div>
 
                     <!-- Rider Perspective -->
-                    <div class="card-bg p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-                        <div class="inline-block bg-red-600 p-4 rounded-full mb-4">
+                    <div class="card-bg p-6 sm:p-8 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+                        <div class="inline-block bg-red-600 p-3 sm:p-4 rounded-full mb-4">
                             <!-- Target Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
                         </div>
-                        <h3 class="text-2xl font-orbitron font-bold mb-2">Rider's Perspective</h3>
-                        <p class="text-gray-400">Beyond dyno graphs - we tune for throttle response, cornering stability, and how the bike communicates with the rider. Real-world performance matters.</p>
+                        <h3 class="text-xl sm:text-2xl font-orbitron font-bold mb-2">Rider's Perspective</h3>
+                        <p class="text-gray-400 text-sm sm:text-base">Beyond dyno graphs - we tune for throttle response, cornering stability, and how the bike communicates with the rider. Real-world performance matters.</p>
                     </div>
                 </div>
 
-                <div class="mt-16 text-center">
-                    <div class="card-bg p-8 rounded-lg max-w-4xl mx-auto">
-                        <h3 class="text-2xl font-orbitron font-bold mb-4">Why Racing Experience Matters</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed">
+                <div class="mt-12 sm:mt-16 text-center">
+                    <div class="card-bg p-6 sm:p-8 rounded-lg max-w-4xl mx-auto">
+                        <h3 class="text-xl sm:text-2xl font-orbitron font-bold mb-4">Why Racing Experience Matters</h3>
+                        <p class="text-gray-400 text-sm sm:text-lg leading-relaxed">
                             Any shop can bolt on parts and chase dyno numbers. But we understand that peak horsepower means nothing if it's not usable. Our racing background gives us the insight to tune for <span class="text-red-400">progressive power delivery</span>, <span class="text-red-400">predictable throttle response</span>, and <span class="text-red-400">confidence-inspiring behavior</span> in every corner. We've felt the difference between a good tune and a great one at 180+ kmph - and that's the difference we bring to every bike that comes through our doors.
                         </p>
                     </div>
@@ -203,36 +230,36 @@
         </section>
 
         <!-- Gallery Section -->
-        <section id="gallery" class="py-20 bg-black">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-orbitron font-bold uppercase">Our <span class="text-red-600">Work</span></h2>
-                    <p class="text-gray-400 mt-2 max-w-2xl mx-auto">A glimpse into the machines we've perfected.</p>
+        <section id="gallery" class="py-16 sm:py-20 bg-black">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-orbitron font-bold uppercase">Our <span class="text-red-600">Work</span></h2>
+                    <p class="text-gray-400 mt-2 max-w-2xl mx-auto text-sm sm:text-base">A glimpse into the machines we've perfected.</p>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="overflow-hidden rounded-lg h-64"><img src="https://images.unsplash.com/photo-1621409504393-e1d3a484c8a2?q=80&w=1974&auto=format&fit=crop" alt="Tuned motorcycle 1" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
-                    <div class="overflow-hidden rounded-lg h-64"><img src="https://images.unsplash.com/photo-1590994909249-1925a73032e1?q=80&w=1974&auto=format&fit=crop" alt="Tuned motorcycle 2" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
-                    <div class="overflow-hidden rounded-lg h-64"><img src="https://images.unsplash.com/photo-1591750245448-b8353ff34159?q=80&w=1974&auto=format&fit=crop" alt="Tuned motorcycle 3" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
-                    <div class="overflow-hidden rounded-lg h-64"><img src="https://images.unsplash.com/photo-1618364214534-84a1f69c4794?q=80&w=1974&auto=format&fit=crop" alt="Tuned motorcycle 4" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                    <div class="overflow-hidden rounded-lg h-48 sm:h-64"><img src="https://images.unsplash.com/photo-1621409504393-e1d3a484c8a2?q=80&w=1974&auto=format&fit=crop" alt="Tuned motorcycle 1" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                    <div class="overflow-hidden rounded-lg h-48 sm:h-64"><img src="https://images.unsplash.com/photo-1590994909249-1925a73032e1?q=80&w=1974&auto=format&fit=crop" alt="Tuned motorcycle 2" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                    <div class="overflow-hidden rounded-lg h-48 sm:h-64"><img src="https://images.unsplash.com/photo-1591750245448-b8353ff34159?q=80&w=1974&auto=format&fit=crop" alt="Tuned motorcycle 3" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
+                    <div class="overflow-hidden rounded-lg h-48 sm:h-64"><img src="https://images.unsplash.com/photo-1618364214534-84a1f69c4794?q=80&w=1974&auto=format&fit=crop" alt="Tuned motorcycle 4" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"></div>
                 </div>
             </div>
         </section>
 
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20 bg-gray-900/50">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl md:text-4xl font-orbitron font-bold uppercase">Get In <span class="text-red-600">Touch</span></h2>
-                <p class="text-gray-400 mt-2 max-w-2xl mx-auto">Ready to transform your ride? Contact us today for a consultation.</p>
+        <section id="contact" class="py-16 sm:py-20 bg-gray-900/50">
+            <div class="container mx-auto px-4 sm:px-6 text-center">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-orbitron font-bold uppercase">Get In <span class="text-red-600">Touch</span></h2>
+                <p class="text-gray-400 mt-2 max-w-2xl mx-auto text-sm sm:text-base">Ready to transform your ride? Contact us today for a consultation.</p>
                 
                 <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="https://wa.me/message/BD2PN5DITP5RK1" class="inline-block bg-green-600 text-white font-bold text-lg uppercase py-3 px-8 rounded-lg hover:bg-green-700 transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 hover:-translate-y-1 transition-all duration-300">
+                    <a href="https://wa.me/message/BD2PN5DITP5RK1" class="inline-block bg-green-600 text-white font-bold text-base sm:text-lg uppercase py-3 px-6 sm:px-8 rounded-lg hover:bg-green-700 transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/50 hover:-translate-y-1 transition-all duration-300">
                         WhatsApp Us
                     </a>
-                    <a href="mailto:hello@speedlabs.shop" class="inline-block bg-red-600 text-white font-bold text-lg uppercase py-3 px-8 rounded-lg hover:bg-red-700 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/50 hover:-translate-y-1 transition-all duration-300">
+                    <a href="mailto:hello@speedlabs.shop" class="inline-block bg-red-600 text-white font-bold text-base sm:text-lg uppercase py-3 px-6 sm:px-8 rounded-lg hover:bg-red-700 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/50 hover:-translate-y-1 transition-all duration-300">
                         Email Us
                     </a>
-                    <a href="https://instagram.com/speedlabs.shop" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-lg uppercase py-3 px-8 rounded-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 hover:-translate-y-1 transition-all duration-300">
+                    <a href="https://instagram.com/speedlabs.shop" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold text-base sm:text-lg uppercase py-3 px-6 sm:px-8 rounded-lg hover:from-purple-700 hover:to-pink-700 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 hover:-translate-y-1 transition-all duration-300">
                         Instagram
                     </a>
                 </div>
@@ -254,8 +281,6 @@
         </div>
     </footer>
 
-    <!-- Rellax.js for Parallax Effect -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rellax/1.12.1/rellax.min.js"></script>
     <script>
         // Initialize Rellax for parallax effects
         // Note: The CSS 'background-attachment: fixed' provides a simpler, more performant parallax effect for the hero.
